@@ -51,6 +51,10 @@ export default function ContactForm({ plan, setPlan }: { plan: string; setPlan: 
   const [resetKey, setResetKey] = useState(0);
   const submissionId = useRef("");
   useEffect(() => { submissionId.current = newId(); }, []);
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") return;
+    if (new URLSearchParams(window.location.search).get("preview") === "success") setStatus("done");
+  }, []);
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<any>) => setF((p) => ({ ...p, [k]: e.target.value }));
 
   async function submit(e: React.FormEvent) {

@@ -24,14 +24,13 @@ Next.js (App Router) + TypeScript。問い合わせフォームは `app/api/lead
 | NEXT_PUBLIC_TURNSTILE_SITE_KEY | Turnstile のサイトキー（公開してよい） |
 | ALLOWED_ORIGINS | 送信を許可するオリジン。本番は必須。未設定の本番は全拒否 |
 | SLACK_WEBHOOK_URL | 任意。Airtable 保存成功後の Slack 通知 |
-| NEXT_PUBLIC_GA_MEASUREMENT_ID | GA4 測定 ID（`G-...`）。未設定時はタグを出さない |
+| NEXT_PUBLIC_GTM_ID | Google Tag Manager（例: `GTM-T654738W`）。GA4 は GTM コンテナ内で設定 |
 
-## GA4
-1. [Google Analytics](https://analytics.google.com/) → 管理 → **データストリーム** → ウェブ → 本番 URL を登録
-2. **測定 ID**（`G-XXXXXXXXXX`）を `.env.local` と Vercel の `NEXT_PUBLIC_GA_MEASUREMENT_ID` に設定
-3. 自動計測: **ページビュー**（全ページ）
-4. フォーム送信成功時: イベント **`generate_lead`**（パラメータ `requested_plan`, `lead_source=ameba-ownd-lp`）
-5. ローカル確認: Chrome 拡張「Google Analytics Debugger」または GA4 **DebugView**（`debug_mode` は未実装。必要なら後から追加）
+## タグ（GTM + gtag）
+- `app/GoogleTagManager.tsx` … `gtm.js` と dataLayer / `gtag()`  bootstrap
+- `.env.local` / Vercel に `NEXT_PUBLIC_GTM_ID=GTM-T654738W`
+- ページ計測・GA4 設定は **GTM 管理画面**側（Google タグ / GA4 設定タグ）
+- フォーム送信成功時: **`generate_lead`** を dataLayer 経由で送信（GTM でトリガー設定可）
 
 ## Airtable テーブル案（`AmebaOwnd_Leads`）※新規作成は承認後
 | フィールド | 型 |
