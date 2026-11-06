@@ -36,8 +36,8 @@ export default function Home() {
     const badge = (hot?: boolean) => hot ? 'position:absolute;top:-14px;left:20px;background:#FF8A24;color:#101B30;font-size:13px;font-weight:700;padding:2px 12px;border-radius:999px' : 'display:none';
     const defs = [
       { name: '無料相談', price: '¥0', tax: '', who: 'まず状況を確認したい方', cta: '無料で相談する', items: ['現在のホームページURL確認', '移行方法の一次診断', '独自ドメイン利用状況の確認', '概算見積もり'] },
-      { name: 'Standard', price: '¥150,000', tax: '（税別）', who: '今のサイトをそのまま移行したい方', cta: 'Standardについて相談する', items: ['既存ホームページの移行', 'テキスト・画像の移行支援', '既存デザインの基本再現', 'スマートフォン対応', '独自ドメイン切替支援', '基本SEO設定'] },
-      { name: 'Premium', price: '¥300,000', tax: '（税別）', who: '移行を機にサイトを見直したい方', cta: 'Premiumについて相談する', hot: true, items: ['Standardの全内容', 'サイトデザインの刷新', 'CTA・問い合わせ導線改善', 'SEO構造の見直し', 'コンテンツ配置の最適化'] },
+      { name: 'Standard', price: '¥150,000', tax: '（税別）', who: '今のサイトをそのまま移行したい方', cta: 'Standardについて相談する', items: ['既存ホームページの移行', 'テキスト・画像の移行支援', '既存デザインの基本再現', 'スマートフォン対応', '独自ドメイン切替支援', '基本SEO設定'], footnote: '既存ページ数10Pまでの対応' },
+      { name: 'Premium', price: '¥300,000', tax: '（税別）', who: '移行を機にサイトを見直したい方', cta: 'Premiumについて相談する', hot: true, items: ['Standardの全内容', 'サイトデザインの刷新', 'CTA・問い合わせ導線改善', 'SEO構造の見直し', 'コンテンツ配置の最適化'], footnote: '既存ページ数11P以上の対応はPremium料金で対応' },
       { name: 'Premium＋ARI', price: '¥400,000', tax: '（税別）', who: 'ARIの導入も検討している方', cta: 'Premium＋ARIについて相談する', items: ['Premiumの全内容', 'ARI導入', 'ARI初期設定', '対応機能の接続・動作検証'] }
     ];
     const Y = '✓', N = '—';
@@ -58,7 +58,7 @@ export default function Home() {
     ];
     const vals = {
       onPlan: (e: any) => setPlan(e.target.value),
-      plans: defs.map((d) => ({ name: d.name, price: d.price, tax: d.tax, who: d.who, cta: d.cta, items: d.items, cardStyle: card(d.hot), badgeStyle: badge(d.hot), btnStyle: btn(d.hot), pick: pick(d.name === '無料相談' ? '無料相談' : d.name) })),
+      plans: defs.map((d) => ({ name: d.name, price: d.price, tax: d.tax, who: d.who, cta: d.cta, items: d.items, footnote: (d as { footnote?: string }).footnote, cardStyle: card(d.hot), badgeStyle: badge(d.hot), btnStyle: btn(d.hot), pick: pick(d.name === '無料相談' ? '無料相談' : d.name) })),
       rows: rowDefs.map((r, ri) => ({ label: r[0], cells: r[1].map((t, ci) => ({ t, style: 'padding:12px 8px;text-align:center;' + (ci === 2 ? 'background:#FFF4E8;' : '') + (t === Y ? 'font-weight:700;color:#14694A;' : (t === N ? 'color:#8A96AB;' : 'font-weight:700;')) })) })),
       running: left > 0,
       ended: left === 0,
@@ -215,6 +215,7 @@ export default function Home() {
 <ul style={css("margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:4px;flex:1")}>
 {p.items.map((i, _i)=>(<Fragment key={_i}><li>{i}</li></Fragment>))}
 </ul>
+{p.footnote ? <p style={css("margin:0;font-size:12px;color:#46536B;line-height:1.5")}>・{p.footnote}</p> : null}
 <a href="#consult" onClick={p.pick} style={css(`${p.btnStyle}`)}>{p.cta}</a>
 </div>
 </Fragment>))}
