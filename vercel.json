@@ -1,0 +1,3 @@
+{
+  "installCommand": "unset NPM_CONFIG_CACHE_DIR && npm ci"
+}
