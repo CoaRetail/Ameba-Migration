@@ -1,5 +1,6 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
+import { FAQS } from "@/lib/faqs";
 import ContactForm from "./ContactForm";
 
 function css(str: string): React.CSSProperties {
@@ -80,16 +81,7 @@ export default function Home() {
         { n: '04', label: 'データ保全・再構築', icon: 'M13 3L5 14h7l-1 9 9-12h-7z' },
         { n: '05', label: '公開・動作確認', icon: 'M4 13l6 6L22 6' }
       ],
-      faqs: [
-        { q: '管理画面にログインできなくても移行できますか？', a: '公開中のサイトを確認できる範囲で対応を検討します。まずは状況をお知らせください。' },
-        { q: '独自ドメインをそのまま使えますか？', a: '多くの場合は継続を検討できますが、ドメインの管理状況によります。確認のうえご案内します。' },
-        { q: 'Google検索の順位は維持できますか？', a: '順位の維持はお約束できません。URL構成や基本設定を整え、影響を抑える対応を行います。' },
-        { q: '12月24日までに間に合いますか？', a: 'サイトの規模や状況によります。お早めのご相談ほど、選べる方法が広がります。' },
-        {
-          q: 'ARIってなんですか？',
-          a: 'ARI（Agent Readiness Index）の略で、AIエージェント（ChatGPT/Gemini/Grok/Claudeなど）からサイトが検索された際にそのサイトがどんなサイトなのかを理解し、検索結果時に反映させるための施策です。AIでの検索が今後増大を見越して、サイト移行のタイミングでAI検索対策を同時に行われることをお勧めします。'
-        }
-      ]
+      faqs: FAQS.map((f) => ({ q: f.q, a: f.a }))
     };
   const { units, plans, rows, patterns, steps, faqs, onPlan } = vals;
   const ended = mounted && vals.ended;

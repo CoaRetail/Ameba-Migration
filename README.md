@@ -52,7 +52,9 @@ Status: New / Contacted / Qualified / Quoted / Won / Lost（新規は `New`）�
 ## 注意
 - レート制限はサーバーのメモリ上です（5回/10分/IP）。サーバーレスでは不完全なので、Cloudflare WAF等も併用してください。
 - `Consent Version` は仮の値 `2026-11-draft` です。プライバシーポリシー確定後に `route.ts` を更新してください。
-- 未設定：canonical、OGP、sitemap、robots、構造化データ、会社概要のURL（`[URL]` のまま。プライバシーポリシーは https://www.coaretail.com/lp_privacy を設定済み）。
+- 本番では `NEXT_PUBLIC_SITE_URL` に canonical / sitemap / OGP の絶対URL用の本番ドメインを設定してください（未設定時は Vercel の `VERCEL_URL`）。
+- SEO: `app/layout.tsx`（メタ・OGP・Twitter）、`app/robots.ts`、`app/sitemap.ts`、`app/StructuredData.tsx`（WebSite / Organization / Service / FAQPage）。
+- GEO: 上記 JSON-LD の Service・FAQ、および `public/llms.txt`（AI向け要約）。
 
 ## 本番公開前チェックリスト（承認待ち）
 - [ ] Airtableの既存Baseを確認し、テーブル作成・フィールド追加を承認
@@ -61,5 +63,5 @@ Status: New / Contacted / Qualified / Quoted / Won / Lost（新規は `New`）�
 - [ ] Turnstileに本番ドメインを登録
 - [ ] 会社概要のURL差し替え（プライバシーポリシーは設定済み。内容確定後に `Consent Version` を更新）
 - [ ] 料金・ARIの提供範囲・納期表記の最終確認
-- [ ] SEOメタ情報の設定
+- [x] SEOメタ情報の設定（`NEXT_PUBLIC_SITE_URL` を Vercel に設定）
 - [ ] 本番デプロイ・DNS変更の承認

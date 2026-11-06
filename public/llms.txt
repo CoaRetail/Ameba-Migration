@@ -1,0 +1,27 @@
+# Ameba Ownd 緊急移行サービス
+
+> Ameba Ownd のサービス終了（2026-12-24 11:00 JST）に伴うホームページ移行支援。運営: 合同会社コア・リテール（Coa Retail）
+
+## このサイトについて
+
+- 対象: Ameba Ownd（amebaownd.com / 独自ドメイン）で公開している店舗・企業・個人事業のサイト
+- 提供: 移行診断、データ保全、再構築、独自ドメイン切替、基本SEO、Premium でサイト改善、Premium＋ARI で AI検索（GEO）向け ARI 導入
+- 公式のサービス終了告知: https://blog.amebaownd.com/posts/59351287/
+- 無料相談フォーム: ページ内 #consult
+
+## 料金（税別）
+
+- 無料相談: ¥0
+- Standard: ¥150,000（既存ページ数10Pまで）
+- Premium: ¥300,000（11P以上は Premium 料金）
+- Premium＋ARI: ¥400,000（ARI 初期設定含む）
+
+## 運営者
+
+- 合同会社コア・リテール
+- https://www.coaretail.com
+- GEO Search Protocol / AI検索最適化: https://www.coaretail.com/geo
+
+## プライバシー
+
+- https://www.coaretail.com/lp_privacy
