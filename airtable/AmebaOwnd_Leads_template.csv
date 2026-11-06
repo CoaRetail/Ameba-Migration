@@ -1,0 +1,2 @@
+Lead ID,Company,Contact Name,Email,Phone,Website URL,Domain Type,Requested Service,Requested Plan,Message,Source,UTM Source,UTM Medium,UTM Campaign,Status,Consent Version,Consent Timestamp
+sample-lead-id,サンプル株式会社,山田太郎,sample@example.com,03-1234-5678,https://example.amebaownd.com,amebaownd.com,ホームページ移行,未定・相談したい,CSVインポート用のサンプル行です。削除して構いません。,ameba-ownd-lp,,,,New,2026-11-draft,2026-11-06T00:00:00.000Z
