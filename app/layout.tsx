@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "./GoogleTagManager";
-import StructuredData from "./StructuredData";
 import { SITE, getSiteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -51,9 +50,6 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, view
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <head>
-        <StructuredData />
-      </head>
       <body>
         <GoogleTagManagerNoScript />
         {children}

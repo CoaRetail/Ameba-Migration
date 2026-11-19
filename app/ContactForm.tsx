@@ -103,6 +103,13 @@ export default function ContactForm({ plan, setPlan }: { plan: string; setPlan: 
   return (
     <form onSubmit={submit} noValidate style={{ background: "#fff", color: "#101B30", borderRadius: 16, padding: 28, display: "flex", flexDirection: "column", gap: 20 }}>
       <h3 style={{ margin: 0, fontSize: 20 }}>無料で移行について相談する</h3>
+      <p style={{ margin: 0, fontSize: 13, color: "#46536B", lineHeight: 1.6 }}>
+        本フォームの送信は無料相談・見積依頼であり、有料サービスへの正式申込みにはなりません。サービスをご依頼いただく場合には、
+        <a href="/terms" style={{ color: "#101B30" }}>
+          利用規約
+        </a>
+        が適用されます。
+      </p>
       <div style={row}>
         <div className="fld"><label htmlFor="f1">会社名・店舗名（任意）</label><input id="f1" value={f.company} onChange={set("company")} autoComplete="organization" aria-invalid={bad("company")} />{err(E.company)}</div>
         <div className="fld"><label htmlFor="f2">お名前（必須）</label><input id="f2" value={f.name} onChange={set("name")} autoComplete="name" aria-invalid={bad("name")} />{err(E.name)}</div>

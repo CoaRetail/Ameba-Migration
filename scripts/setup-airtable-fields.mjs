@@ -111,7 +111,7 @@ async function main() {
       method: "POST",
       body: JSON.stringify({
         name: "AmebaOwnd_Leads",
-        description: "Ameba Ownd 緊急移行 LP 問い合わせ",
+        description: "Ameba Ownd 移行 LP 問い合わせ",
         fields: fieldsForCreate,
       }),
     });

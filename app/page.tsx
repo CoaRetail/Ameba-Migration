@@ -1,7 +1,11 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import { FAQS } from "@/lib/faqs";
+import { SITE } from "@/lib/site";
 import ContactForm from "./ContactForm";
+import StructuredData from "./StructuredData";
+
+const PLACEHOLDER = "—";
 
 function css(str: string): React.CSSProperties {
   const o: Record<string, string> = {};
@@ -23,9 +27,9 @@ export default function Home() {
     return () => clearInterval(t);
   }, []);
   const mounted = now !== null;
-    const end = Date.parse('2026-12-24T11:00:00+09:00');
-    const left = Math.max(0, end - (now ?? end));
-    const s = Math.floor(left / 1000);
+    const end = Date.parse(SITE.serviceEndIso);
+    const left = mounted ? Math.max(0, end - now!) : null;
+    const s = left !== null ? Math.floor(left / 1000) : 0;
     const p = (n: number) => String(n).padStart(2, '0');
     const old = 'background:#E6EBF3;color:#46536B';
     const nu = 'background:#FF8A24;color:#101B30;font-weight:700';
@@ -61,43 +65,62 @@ export default function Home() {
       onPlan: (e: any) => setPlan(e.target.value),
       plans: defs.map((d) => ({ name: d.name, price: d.price, tax: d.tax, who: d.who, cta: d.cta, items: d.items, footnote: (d as { footnote?: string }).footnote, cardStyle: card(d.hot), badgeStyle: badge(d.hot), btnStyle: btn(d.hot), pick: pick(d.name === '無料相談' ? '無料相談' : d.name) })),
       rows: rowDefs.map((r, ri) => ({ label: r[0], cells: r[1].map((t, ci) => ({ t, style: 'padding:12px 8px;text-align:center;' + (ci === 2 ? 'background:#FFF4E8;' : '') + (t === Y ? 'font-weight:700;color:#14694A;' : (t === N ? 'color:#8A96AB;' : 'font-weight:700;')) })) })),
-      running: left > 0,
+      running: left !== null && left > 0,
       ended: left === 0,
-      units: [
-        { value: String(Math.floor(s / 86400)), label: '日', color: '#FF8A24' },
-        { value: p(Math.floor(s % 86400 / 3600)), label: '時間', color: '#fff' },
-        { value: p(Math.floor(s % 3600 / 60)), label: '分', color: '#fff' },
-        { value: p(s % 60), label: '秒', color: '#fff' }
-      ],
+      units: !mounted
+        ? [
+            { value: PLACEHOLDER, label: '日', color: '#C9D3E5' },
+            { value: PLACEHOLDER, label: '時間', color: '#C9D3E5' },
+            { value: PLACEHOLDER, label: '分', color: '#C9D3E5' },
+            { value: PLACEHOLDER, label: '秒', color: '#C9D3E5' },
+          ]
+        : [
+            { value: String(Math.floor(s / 86400)), label: '日', color: '#FF8A24' },
+            { value: p(Math.floor(s % 86400 / 3600)), label: '時間', color: '#fff' },
+            { value: p(Math.floor(s % 3600 / 60)), label: '分', color: '#fff' },
+            { value: p(s % 60), label: '秒', color: '#fff' },
+          ],
       patterns: [
         { key: 'A', title: 'Ameba Ownd 無料サブドメイン利用', flow: [{ t: 'example.amebaownd.com', style: old }, ar, { t: 'コンテンツ保全・再構築', style: mid }, ar, { t: 'new-example.jp（例）', style: nu }], note: '新ドメインは説明用の例です。新URLへの移行案内も支援します。' },
         { key: 'B', title: '独自ドメイン利用', flow: [{ t: 'www.example.jp', style: old }, ar, { t: 'DNS / Hosting 切替', style: mid }, ar, { t: 'www.example.jp（同じURL）', style: nu }], note: 'DNS設定・ドメイン管理権限・移行先の技術条件によって、対応可否が変わります。' },
         { key: 'C', title: '既存サイトを改善しながら移行', flow: [{ t: '旧サイト', style: old }, ar, { t: 'デザイン改善', style: mid }, ar, { t: '新サイト', style: nu }], note: 'スマホ対応・問い合わせ導線・基本SEO設定の改善を含めて再構築します。' }
       ],
       steps: [
-        { n: '01', label: '無料相談', icon: 'M4 5h18v13H11l-5 4v-4H4z' },
-        { n: '02', label: '現状確認', icon: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM16 16l6 6' },
-        { n: '03', label: '見積・契約', icon: 'M6 3h10l4 4v16H6zM10 12h6M10 17h6' },
-        { n: '04', label: 'データ保全・再構築', icon: 'M13 3L5 14h7l-1 9 9-12h-7z' },
-        { n: '05', label: '公開・動作確認', icon: 'M4 13l6 6L22 6' }
+        { n: '01', label: '無料相談', detail: '現状ヒアリングと進め方の整理', icon: 'M4 5h18v13H11l-5 4v-4H4z' },
+        { n: '02', label: '現状確認', detail: 'URL・ドメイン・構成・Export状況の確認', icon: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM16 16l6 6' },
+        { n: '03', label: '見積・契約', detail: 'プランと作業範囲の確定', icon: 'M6 3h10l4 4v16H6zM10 12h6M10 17h6' },
+        {
+          n: '04',
+          label: 'データ保全・再構築',
+          detail: 'Exportデータ取得、コンテンツ移行、必要に応じた再構築、画像・リンクの確認',
+          icon: 'M13 3L5 14h7l-1 9 9-12h-7z',
+        },
+        {
+          n: '05',
+          label: '公開・動作確認',
+          detail: '独自ドメイン / DNS切替、公開、表示・動作の確認',
+          icon: 'M4 13l6 6L22 6',
+        },
       ],
       faqs: FAQS.map((f) => ({ q: f.q, a: f.a }))
     };
   const { units, plans, rows, patterns, steps, faqs, onPlan } = vals;
   const ended = mounted && vals.ended;
-  const running = !ended;
+  const showCountdown = !ended;
   return (
     <>
+<StructuredData />
 <div style={css("background:#fff;overflow-x:hidden")}>
 
 <section style={css("background:#101B30;color:#fff;padding:64px 24px 72px")}>
 <div style={css("max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:28px;align-items:center;text-align:center")}>
 <p style={css("margin:0;font-size:14px;color:#FF8A24;font-weight:700;letter-spacing:.08em")}>Ameba Ownd サービス終了のお知らせ</p>
-<h1 style={css("margin:0;font-size:clamp(28px,5vw,48px);line-height:1.3")}>Ameba Ownd で作ったホームページ、<br />2026年12月24日までに移行準備を。</h1>
-<p style={css("margin:0;max-width:680px;color:#C9D3E5;font-size:16px")}>店舗・企業・個人事業のホームページを、独自ドメインや既存コンテンツも含めて移行支援します。「何から始めればいいか分からない」段階からご相談いただけます。</p>
+<h1 style={css("margin:0;font-size:clamp(28px,5vw,48px);line-height:1.3")}>Ameba Ownd のサービス終了は<br />2027年3月31日へ延期されました。</h1>
+<p style={css("margin:0;max-width:720px;color:#FF8A24;font-size:17px;font-weight:700")}>ただし、記事・ページの投稿・更新機能は停止したままです。</p>
+<p style={css("margin:0;max-width:720px;color:#C9D3E5;font-size:16px;line-height:1.75")}>現在のサイトを閲覧できる期間は延長されましたが、事業サイトとして必要な情報更新ができない状態は続いています。<br />店舗・企業・個人事業のホームページを、独自ドメインや既存コンテンツも含めて次のWeb環境へ移行支援します。</p>
 
 <div style={css("width:100%;max-width:760px;display:flex;flex-direction:column;gap:12px;align-items:center")}>
-{running && (<>
+{showCountdown && (<>
 <p style={css("margin:0;font-size:14px;color:#C9D3E5")}>サービス終了まで</p>
 <div style={css("width:100%;display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:12px")}>
 {units.map((u, _u)=>(<Fragment key={_u}>
@@ -111,7 +134,7 @@ export default function Home() {
 {ended && (<>
 <p style={css("margin:0;font-size:20px;font-weight:700;color:#FF8A24")}>Ameba Ownd のサービス終了日時を迎えました</p>
 </>)}
-<p style={css("margin:0;font-size:14px;color:#C9D3E5")}>終了日時：2026年12月24日 11:00（日本時間）　出典：<a href="https://blog.amebaownd.com/posts/59351287/" style={css("color:#fff")}>Ameba Ownd 公式告知</a></p>
+<p style={css("margin:0;font-size:14px;color:#C9D3E5")}>終了日時：{SITE.serviceEndDisplay}　出典：<a href={SITE.officialNoticeUrl} style={css("color:#fff")}>Ameba Ownd 公式最新情報</a></p>
 </div>
 
 <div style={css("display:flex;flex-wrap:wrap;gap:12px;justify-content:center")}>
@@ -125,7 +148,7 @@ export default function Home() {
 <div className="bar"><span className="dot"></span><span className="dot"></span><span className="dot"></span><span style={css("font-size:11px;color:#46536B;margin-left:8px")}>example.amebaownd.com</span></div>
 <div style={css("padding:16px;opacity:.55")}><div className="ln" style={css("width:60%;height:12px;background:#B7C2D6")}></div><div className="ln"></div><div className="ln" style={css("width:80%")}></div><div style={css("height:48px;border-radius:8px;background:#E6EBF3;margin-top:12px")}></div></div>
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" style={css("position:absolute;top:56px;right:16px")} aria-hidden="true"><circle cx="22" cy="22" r="20" fill="#E5484D"/><path d="M22 12v13M22 31v1" stroke="#fff" strokeWidth="3.5" strokeLinecap="round"/></svg>
-<div style={css("padding:0 16px 16px")}><span className="tag" style={css("background:#FDE8E9;color:#B3282D;margin-top:0")}>このままでは公開終了</span></div>
+<div style={css("padding:0 16px 16px")}><span className="tag" style={css("background:#FFF0E0;color:#9A5B00;margin-top:0")}>情報の更新ができない</span></div>
 </div>
 <div className="arr" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#FF8A24"/><path d="M14 24h19M26 16l8 8-8 8" stroke="#101B30" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
 <div className="bw">
@@ -135,6 +158,38 @@ export default function Home() {
 <div style={css("padding:0 16px 16px")}><span className="tag" style={css("background:#E1F5EC;color:#14694A;margin-top:0")}>新しい環境で公開継続</span></div>
 </div>
 </div>
+</div>
+</section>
+
+<section style={css("padding:64px 24px")}>
+<div style={css("max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:20px")}>
+<h2 style={css("margin:0;font-size:clamp(24px,4vw,34px);line-height:1.4")}>終了日は延期されました。<br />しかし、Webサイトの更新機能は戻っていません。</h2>
+<p style={css("margin:0;font-size:16px;color:#46536B;line-height:1.75")}>Ameba Owndのサービス終了日は2027年3月31日へ延期されました。一方で、記事・ページの投稿・更新機能は停止したままです。現在のサイトを閲覧することはできますが、次のような事業サイトとして必要な情報を更新できない状態が続いています。</p>
+<ul style={css("margin:0;padding-left:20px;font-size:15px;color:#46536B;display:flex;flex-direction:column;gap:6px")}>
+<li>営業時間</li>
+<li>料金</li>
+<li>サービス内容</li>
+<li>お知らせ</li>
+<li>施工事例</li>
+<li>ブログ</li>
+</ul>
+<p style={css("margin:0;font-size:15px;color:#101B30;font-weight:700;line-height:1.6")}>終了日まで待つのではなく、事業サイトとして正常に更新・運用できる環境へ移行することをおすすめします。</p>
+</div>
+</section>
+
+<section id="export" style={css("background:#F3F6FA;padding:64px 24px")}>
+<div style={css("max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:20px")}>
+<h2 style={css("margin:0;font-size:clamp(24px,4vw,34px);line-height:1.4")}>データを書き出すだけでは、<br />Webサイトの移行完了ではありません。</h2>
+<p style={css("margin:0;font-size:15px;color:#46536B;line-height:1.75")}>Ameba Owndでは2026年11月18日から、管理画面の「コンテンツのエクスポート」により記事・ページ等のデータを書き出せます（利用期限は{SITE.serviceEndDisplay}まで）。ただし、エクスポートファイルを保存しただけでは、新しいサイトでの公開には至りません。</p>
+<div style={css("background:#fff;border-radius:12px;border:1px solid #D5DDEA;padding:24px;display:flex;flex-direction:column;gap:12px")}>
+<p style={css("margin:0;font-size:15px;font-weight:700")}>公式エクスポートで確認できる主な点</p>
+<ul style={css("margin:0;padding-left:20px;font-size:14px;color:#46536B;display:flex;flex-direction:column;gap:6px")}>
+<li>記事・ページ・カテゴリ・下書きなどを書き出し可能（形式は WordPress用 zip または Amebaブログ用テキストなど）</li>
+<li>ファイルには画像そのものではなく<strong>画像のURL</strong>が含まれます。画像は移行先への取り込み時にAmeba Owndから取得されます</li>
+<li>サイトのデザイン設定やテーマなどはエクスポート対象外です</li>
+</ul>
+</div>
+<p style={css("margin:0;font-size:15px;color:#46536B;line-height:1.75")}>移行を完了するには、エクスポートに加えて、移行先への取り込み、画像の表示確認、リンク確認、独自ドメインの切替などが必要になる場合があります。画像を含めて移行する場合は、サービス終了前に取り込みと表示確認まで余裕をもって進めることが重要です（詳細は<a href={SITE.officialNoticeUrl} style={css("color:#101B30")}>Ameba Ownd 公式最新情報</a>をご確認ください）。</p>
 </div>
 </section>
 
@@ -176,6 +231,10 @@ export default function Home() {
 </div>
 </Fragment>))}
 </div>
+<div style={css("background:#F3F6FA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:8px")}>
+<p style={css("margin:0;font-size:15px;line-height:1.7")}>WordPress / Studio.Designなど、サイトの用途・更新方法・運用体制に合わせて移行先をご提案します。</p>
+<p style={css("margin:0;font-size:14px;color:#46536B;line-height:1.6")}>移行先によって、データの取り込み方法・変換・再構築方法が異なります。Ameba Ownd公式エクスポートの対象や形式は移行先ごとに異なるため、事前の現状確認のうえ最適な方法をご案内します。</p>
+</div>
 </div>
 </section>
 
@@ -186,7 +245,7 @@ export default function Home() {
 {steps.map((s, _s)=>(<Fragment key={_s}>
 <div className="st">
 <div className="ic"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#101B30" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={s.icon}/></svg></div>
-<div><span style={css("font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#FF8A24;font-size:14px")}>{s.n}</span><p style={css("margin:0;font-weight:700")}>{s.label}</p></div>
+<div><span style={css("font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#FF8A24;font-size:14px")}>{s.n}</span><p style={css("margin:0;font-weight:700")}>{s.label}</p><p style={css("margin:4px 0 0;font-size:13px;color:#46536B;line-height:1.5")}>{s.detail}</p></div>
 </div>
 </Fragment>))}
 </div>
@@ -245,8 +304,8 @@ export default function Home() {
 <section id="consult" style={css("background:#101B30;color:#fff;padding:72px 24px")}>
 <div style={css("max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:24px")}>
 <div style={css("text-align:center")}>
-<h2 style={css("margin:0 0 12px;font-size:clamp(24px,4vw,34px);line-height:1.4")}>ホームページが使えなくなる前に、<br />移行方法を確認しませんか？</h2>
-<p style={css("margin:0;color:#C9D3E5;font-size:14px")}>終了日時：2026年12月24日 11:00（日本時間）</p>
+<h2 style={css("margin:0 0 12px;font-size:clamp(24px,4vw,34px);line-height:1.4")}>事業サイトとして更新できる環境へ。<br />移行方法を確認しませんか？</h2>
+<p style={css("margin:0;color:#C9D3E5;font-size:14px")}>終了日時：{SITE.serviceEndDisplay}</p>
 </div>
 <ContactForm plan={plan} setPlan={setPlan} />
 </div>
@@ -256,20 +315,21 @@ export default function Home() {
 <div style={css("max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:24px")}>
 <div style={css("display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start")}>
 <div style={css("display:flex;flex-direction:column;gap:6px;flex:1 1 280px")}>
-<p style={css("margin:0;font-size:18px;font-weight:700;color:#fff")}>Ameba Ownd 緊急移行サービス</p>
+<p style={css("margin:0;font-size:18px;font-weight:700;color:#fff")}>{SITE.name}</p>
 <p style={css("margin:0;font-size:13px")}>運営：合同会社コア・リテール</p>
 </div>
 <nav aria-label="フッターメニュー" style={css("display:flex;flex-wrap:wrap;gap:8px 24px;font-size:14px;flex:1 1 280px")}>
 <a href="#pricing" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>料金</a>
 <a href="#patterns" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>移行パターン</a>
 <a href="#consult" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>無料相談</a>
-<a href="https://blog.amebaownd.com/posts/59351287/" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>Ameba Ownd 公式告知</a>
-<a href="https://www.coaretail.com/lp_privacy" target="_blank" rel="noopener noreferrer" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>プライバシーポリシー</a>
-<a href="https://www.coaretail.com" target="_blank" rel="noopener noreferrer" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>会社概要</a>
+<a href={SITE.officialNoticeUrl} style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>Ameba Ownd 公式最新情報</a>
+<a href="/terms" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>利用規約</a>
+<a href={SITE.privacyUrl} target="_blank" rel="noopener noreferrer" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>プライバシーポリシー</a>
+<a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer" style={css("color:#fff;min-height:44px;display:flex;align-items:center")}>会社概要</a>
 </nav>
 </div>
 <div style={css("border-top:1px solid #2B3C63;padding-top:16px;display:flex;flex-direction:column;gap:6px;font-size:12px")}>
-<p style={css("margin:0")}>サービス終了日時：2026年12月24日 11:00（日本時間）。出典は上記の公式告知です。</p>
+<p style={css("margin:0")}>サービス終了日時：{SITE.serviceEndDisplay}。出典は上記の公式最新情報です。</p>
 <p style={css("margin:0")}>Ameba Ownd は各権利者の商標または登録商標です。</p>
 <p style={css("margin:0")}>© 合同会社コア・リテール</p>
 </div>

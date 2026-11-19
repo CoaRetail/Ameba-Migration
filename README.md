@@ -1,4 +1,4 @@
-# Ameba Ownd 緊急移行サービス LP
+# Ameba Ownd 移行サービス LP
 
 Next.js (App Router) + TypeScript。問い合わせフォームは `app/api/leads/route.ts` からAirtableへ直接保存します（ブラウザからAirtable APIは呼びません）。
 
@@ -10,6 +10,8 @@ Next.js (App Router) + TypeScript。問い合わせフォームは `app/api/lead
 
 ## 構成
 - `app/page.tsx` ページ本体（カウントダウン、料金、プラン自動選択）
+- `app/terms/page.tsx` 利用規約（`/terms`）
+- `lib/terms-articles.ts` 利用規約本文データ
 - `app/ContactForm.tsx` フォームUI（項目別エラー、送信中の無効化、二重送信防止、Turnstile、Honeypot）
 - `app/api/leads/route.ts` 送信API（Origin制限、レート制限、サーバー側検証、Turnstile検証、Airtable保存）
 - `lib/leads.ts` 入力検証と選択肢（クライアントとサーバーで共通）
@@ -53,7 +55,21 @@ Status: New / Contacted / Qualified / Quoted / Won / Lost（新規は `New`）�
 - レート制限はサーバーのメモリ上です（5回/10分/IP）。サーバーレスでは不完全なので、Cloudflare WAF等も併用してください。
 - `Consent Version` は仮の値 `2026-11-draft` です。プライバシーポリシー確定後に `route.ts` を更新してください。
 - 本番では `NEXT_PUBLIC_SITE_URL` に canonical / sitemap / OGP の絶対URL用の本番ドメインを設定してください（未設定時は Vercel の `VERCEL_URL`）。
-- SEO: `app/layout.tsx`（メタ・OGP・Twitter）、`app/robots.ts`、`app/sitemap.ts`、`app/StructuredData.tsx`（WebSite / Organization / Service / FAQPage）。
+- SEO: `app/layout.tsx`（メタ・OGP・Twitter）、`app/robots.ts`、`app/sitemap.ts`、`app/StructuredData.tsx`（LPのみ・WebSite / Organization / Service / FAQPage）。
+- 利用規約: `https://migration.coaretail.com/terms`（問い合わせ送信のみでは契約成立しない。標準フローは下記）。
+
+## 標準契約フロー（運用メモ）
+1. 無料相談
+2. 現状確認
+3. 見積書送付（「本サービスには Ameba Ownd Website Migration 利用規約が適用されます」と案内）
+4. 利用者が見積書＋利用規約を確認
+5. 電子メール等で正式発注
+6. 当社が承諾 → 契約成立
+7. 請求書発行 → 入金
+8. 必要なアクセス権限共有
+9. 作業開始
+
+正式発注時のメール返信等を契約同意の証跡として保存する運用を想定する。
 - GEO: 上記 JSON-LD の Service・FAQ、および `public/llms.txt`（AI向け要約）。
 
 ## 本番公開前チェックリスト（承認待ち）

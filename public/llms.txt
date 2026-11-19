@@ -1,12 +1,14 @@
-# Ameba Ownd 緊急移行サービス
+# Ameba Ownd 移行サービス
 
-> Ameba Ownd のサービス終了（2026-12-24 11:00 JST）に伴うホームページ移行支援。運営: 合同会社コア・リテール（Coa Retail）
+> Ameba Ownd のサービス終了（2027-03-31 11:00頃 JST）に伴うホームページ移行支援。運営: 合同会社コア・リテール（Coa Retail）
 
 ## このサイトについて
 
 - 対象: Ameba Ownd（amebaownd.com / 独自ドメイン）で公開している店舗・企業・個人事業のサイト
+- 状況: サービス終了日は2027年3月31日へ延期。閲覧は可能だが記事・ページの投稿・更新は停止中
 - 提供: 移行診断、データ保全、再構築、独自ドメイン切替、基本SEO、Premium でサイト改善、Premium＋ARI で AI検索（GEO）向け ARI 導入
-- 公式のサービス終了告知: https://blog.amebaownd.com/posts/59351287/
+- 公式エクスポート: 2026-11-18 提供開始（WordPress用 zip / Amebaブログ用テキスト等。画像はURL記載で取り込み時に取得）
+- 公式最新情報: https://blog.amebaownd.com/posts/59351297/
 - 無料相談フォーム: ページ内 #consult
 
 ## 料金（税別）
