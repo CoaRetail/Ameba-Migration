@@ -164,6 +164,15 @@ export default function Home() {
 <section style={css("padding:64px 24px")}>
 <div style={css("max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:20px")}>
 <h2 style={css("margin:0;font-size:clamp(24px,4vw,34px);line-height:1.4")}>終了日は延期されました。<br />しかし、Webサイトの更新機能は戻っていません。</h2>
+<figure style={css("margin:0;width:100%")}>
+<img
+  src="/ameba-ownd-schedule-update.jpg"
+  alt="Ameba Ownd サービス終了スケジュール更新。2026年12月24日から2027年3月31日11時頃へ延期。閲覧は3月31日まで継続、記事・ページ更新は再開しない、データExportは11月18日提供開始。"
+  width={1024}
+  height={576}
+  style={css("width:100%;height:auto;border-radius:12px;display:block;box-shadow:0 8px 24px rgba(16,27,48,.12)")}
+/>
+</figure>
 <p style={css("margin:0;font-size:16px;color:#46536B;line-height:1.75")}>Ameba Owndのサービス終了日は2027年3月31日へ延期されました。一方で、記事・ページの投稿・更新機能は停止したままです。現在のサイトを閲覧することはできますが、次のような事業サイトとして必要な情報を更新できない状態が続いています。</p>
 <ul style={css("margin:0;padding-left:20px;font-size:15px;color:#46536B;display:flex;flex-direction:column;gap:6px")}>
 <li>営業時間</li>
