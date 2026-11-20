@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { OG_IMAGE } from "@/lib/geo-facts";
 import { TERMS_ARTICLES, TERMS_EFFECTIVE_DATE } from "@/lib/terms-articles";
 import { SITE } from "@/lib/site";
+import TermsStructuredData from "./TermsStructuredData";
 
 const TERMS_TITLE = "Ameba Ownd Website Migration 利用規約";
 const TERMS_DESCRIPTION =
@@ -18,11 +20,20 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: `${TERMS_TITLE}｜${SITE.legalName}`,
     description: TERMS_DESCRIPTION,
+    images: [
+      {
+        url: OG_IMAGE.path,
+        width: OG_IMAGE.width,
+        height: OG_IMAGE.height,
+        alt: OG_IMAGE.alt,
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${TERMS_TITLE}｜${SITE.legalName}`,
     description: TERMS_DESCRIPTION,
+    images: [OG_IMAGE.path],
   },
   robots: { index: true, follow: true },
 };
@@ -30,6 +41,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="terms-page">
+      <TermsStructuredData />
       <header className="terms-topbar">
         <div className="terms-topbar-inner">
           <Link href="/" className="terms-home-link">

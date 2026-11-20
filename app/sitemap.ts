@@ -1,19 +1,19 @@
 import type { MetadataRoute } from "next";
-import { getSiteUrl } from "@/lib/site";
+import { SITE, getSiteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
-  const now = new Date();
+  const lastModified = new Date(`${SITE.contentUpdatedIso}T00:00:00+09:00`);
   return [
     {
       url: base,
-      lastModified: now,
+      lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${base}/terms`,
-      lastModified: now,
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.5,
     },

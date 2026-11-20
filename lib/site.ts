@@ -15,7 +15,9 @@ export const SITE = {
   legalName: "合同会社コア・リテール",
   title: "Ameba Ownd 移行サービス｜2027年3月31日のサービス終了に向けたWebサイト移行",
   description:
-    "Ameba Owndは2027年3月31日にサービス終了予定。記事・ページの更新機能が停止しているAmeba Owndサイトを、WordPress・Studio.Design等の新しい環境へ移行支援。独自ドメイン・コンテンツ・画像・SEOを考慮して対応。合同会社コア・リテールが運営。",
+    "Ameba Owndのサービス終了は2027年3月31日11時頃へ延期。閲覧は継続するが更新機能は停止中。公式エクスポートと合わせ、WordPress・Studio.Design等への移行、独自ドメイン切替、基本SEO、ARIによるAI検索（GEO）対策まで。合同会社コア・リテールが運営。",
+  /** コンテンツ最終更新（sitemap・JSON-LD dateModified の基準） */
+  contentUpdatedIso: "2026-11-20",
   locale: "ja_JP",
   companyUrl: "https://www.coaretail.com",
   geoServiceUrl: "https://www.coaretail.com/geo",

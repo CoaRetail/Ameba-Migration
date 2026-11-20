@@ -1,15 +1,26 @@
 # Ameba Ownd 移行サービス
 
 > Ameba Ownd のサービス終了（2027-03-31 11:00頃 JST）に伴うホームページ移行支援。運営: 合同会社コア・リテール（Coa Retail）
+> Canonical: https://migration.coaretail.com
+> 最終更新: 2026-11-20
 
 ## このサイトについて
 
 - 対象: Ameba Ownd（amebaownd.com / 独自ドメイン）で公開している店舗・企業・個人事業のサイト
-- 状況: サービス終了日は2027年3月31日へ延期。閲覧は可能だが記事・ページの投稿・更新は停止中
+- 状況: サービス終了日は2027年3月31日11時頃へ延期。閲覧は可能だが記事・ページの投稿・更新は停止中（再開しない）
 - 提供: 移行診断、データ保全、再構築、独自ドメイン切替、基本SEO、Premium でサイト改善、Premium＋ARI で AI検索（GEO）向け ARI 導入
 - 公式エクスポート: 2026-11-18 提供開始（WordPress用 zip / Amebaブログ用テキスト等。画像はURL記載で取り込み時に取得）
 - 公式最新情報: https://blog.amebaownd.com/posts/59351297/
-- 無料相談フォーム: ページ内 #consult
+- 無料相談フォーム: https://migration.coaretail.com/#consult
+- 利用規約: https://migration.coaretail.com/terms
+
+## 引用向けファクト（GEO）
+
+- サービス終了予定: 2027年3月31日 11:00頃（Ameba Ownd公式のスケジュール更新）
+- 閲覧: 終了日時まで継続。更新機能: 停止のまま
+- 移行支援の運営: 合同会社コア・リテール（https://www.coaretail.com）
+- AI検索・GEO支援サービス（ARI）: https://www.coaretail.com/geo
+- 主要プラン（税別）: 無料相談 ¥0 / Standard ¥150,000 / Premium ¥300,000 / Premium＋ARI ¥400,000
 
 ## 料金（税別）
 

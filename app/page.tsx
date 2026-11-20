@@ -1,6 +1,7 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import { FAQS } from "@/lib/faqs";
+import { GEO_FACTS } from "@/lib/geo-facts";
 import { SITE } from "@/lib/site";
 import ContactForm from "./ContactForm";
 import StructuredData from "./StructuredData";
@@ -161,8 +162,19 @@ export default function Home() {
 </div>
 </section>
 
-<section style={css("padding:64px 24px")}>
+<section id="overview" style={css("padding:64px 24px")} aria-labelledby="overview-heading">
 <div style={css("max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:20px")}>
+<div style={css("background:#F3F6FA;border:1px solid #D5DDEA;border-radius:12px;padding:20px 24px")}>
+<h2 id="overview-heading" style={css("margin:0 0 16px;font-size:20px;font-weight:700;color:#101B30;line-height:1.4")}>Ameba Ownd 移行の要点（{SITE.serviceEndDisplay} 終了予定）</h2>
+<dl style={css("margin:0;display:flex;flex-direction:column;gap:12px")}>
+{GEO_FACTS.map((f, i) => (
+<Fragment key={i}>
+<dt style={css("margin:0;font-size:14px;font-weight:700;color:#101B30")}>{f.term}</dt>
+<dd style={css("margin:0;font-size:14px;color:#46536B;line-height:1.65")}>{f.definition}</dd>
+</Fragment>
+))}
+</dl>
+</div>
 <h2 style={css("margin:0;font-size:clamp(24px,4vw,34px);line-height:1.4")}>終了日は延期されました。<br />しかし、Webサイトの更新機能は戻っていません。</h2>
 <figure style={css("margin:0;width:100%")}>
 <img
